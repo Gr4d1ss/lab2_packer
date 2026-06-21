@@ -1,0 +1,22 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+$script = <<-SCRIPT
+echo I am provisioning...
+sudo service redis-server start
+python3 ddd2023/compose/app/app.py
+SCRIPT
+
+Vagrant.configure("2") do |config|
+    config.vm.box = "ubuntu18application"
+    config.vm.define "application" do |application|
+      application.vm.box = "ubuntu18application"
+      config.ssh.username = 'vagrant'
+      config.ssh.password = 'vagrant'
+      config.ssh.insert_key = false
+
+       # You may wish to use a more obscure private ip, like 10.2.2.4
+      application.vm.network "private_network", ip: "10.0.0.200"
+      application.vm.network "forwarded_port", guest: 8080, host: 8083, host_ip: "127.0.0.1"
+      application.vm.provision "shell", inline: $script
+    end
+end

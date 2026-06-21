@@ -1,0 +1,21 @@
+# ISO образ (слишком большой для GitHub)
+iso/
+packer_cache/
+
+# Выходные файлы Packer
+output/
+*.box
+*.vmdk
+*.ovf
+*.vdi
+
+# Vagrant временные файлы
+.vagrant/
+
+# Логи
+*.log
+nohup.out
+
+# Системные файлы
+.DS_Store
+Thumbs.db
